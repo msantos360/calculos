@@ -35,38 +35,51 @@ public class ItauCodigoDeBarrasTest extends BarcodeGenerics {
 	
 	@Test
 	public void testeDigitoNossoNumero() {
-		String nossoNumeroTeste = "00571234511012345678";
-		String nossoNumeroTeste2 = "29381092618198239589";
-		String nossoNumeroTeste3 = "29380617511229326887";
-
-		String calculoDigitoNossoNumero = getDigitoNossoNumero(nossoNumeroTeste);
-		String calculoDigitoNossoNumero2 = getDigitoNossoNumero(nossoNumeroTeste2);
-		String calculoDigitoNossoNumero3 = getDigitoNossoNumero(nossoNumeroTeste3);
-
-		assertEquals("8", calculoDigitoNossoNumero);
-		assertEquals("6", calculoDigitoNossoNumero2);
-		assertEquals("9", calculoDigitoNossoNumero3);
+		String digitoNossoNumero = getDigitoNossoNumero("34191123903955458293081054140009784770003055248");
+		String digitoNossoNumero2 = getDigitoNossoNumero("34191123903132165293081054140009184830000332661");
+		String digitoNossoNumero3 = getDigitoNossoNumero("34191819812395896293081092670009384380005316393");
+		String digitoNossoNumero4 = getDigitoNossoNumero("34191124659716123293581092670009784800000625060");
+		String digitoNossoNumero5 = getDigitoNossoNumero("34191123900680299293080617570009384850000785490");
+		String digitoNossoNumero6 = getDigitoNossoNumero("34191123900682956293080617570009884670001061500");
 		
+		assertEquals("9", digitoNossoNumero);
+		assertEquals("9", digitoNossoNumero2);
+		assertEquals("9", digitoNossoNumero3);
+		assertEquals("9", digitoNossoNumero4);
+		assertEquals("9", digitoNossoNumero5);
+		assertEquals("9", digitoNossoNumero6);
 	}
-
+	
 	@Test
 	public void montaCodigoDeBarrasUtilizandoAclassItau() {
 		ItauCalculoBarcode incotep = new ItauCalculoBarcode(LocalDate.of(2020, 12, 22),
 				"34191.12390 39554.582930 81054.140009 7 84770003055248", "11239395545-8", "2938", "10541-4");
+		ItauCalculoBarcode incotep2 = new ItauCalculoBarcode(LocalDate.of(2020, 12, 28),
+				"34191.12390 31321.652930 81054.140009 1 84830000332661", "393132165", "2938", "10541-4");
 
 		ItauCalculoBarcode inox = new ItauCalculoBarcode(LocalDate.of(2020, 11, 13),
 				"34191.81981 23958.962930 81092.670009 3 84380005316393", "181/98239589-6", "2938", "10926-7");
+		ItauCalculoBarcode inox2 = new ItauCalculoBarcode(LocalDate.of(2020, 12, 25),
+				"34191.12465 97161.232935 81092.670009 7 84800000625060", "469716123", "2938", "10926-7");
 
-		ItauCalculoBarcode tubosEacos = new ItauCalculoBarcode(LocalDate.of(2020, 12, 05),
-				"34191.12291 32688.792939 80617.570009 1 84600000426666", "29326887", "2938", "06175-7");
+		ItauCalculoBarcode acotubo = new ItauCalculoBarcode(LocalDate.of(2020, 12, 30),
+				"34191.12390 06802.992930 80617.570009 3 84850000785490", "39068029", "2938", "06175-7");
 
 		String barcodeIncotep = incotep.getBarcode();
+		String barcodeIncotep2 = incotep2.getBarcode();
+		
 		String barcodeInox = inox.getBarcode();
-		String barcodeTubosEacos = tubosEacos.getBarcode();
+		String barcodeInox2 = inox2.getBarcode();
+		
+		String barcodeAcotubo = acotubo.getBarcode();
 
 		assertEquals("34197847700030552481123939554582938105414000", barcodeIncotep);
+		assertEquals("34191848300003326611123931321652938105414000", barcodeIncotep2);
+		
 		assertEquals("34193843800053163931819823958962938109267000", barcodeInox);
-		assertEquals("34191846000004266661122932688792938061757000", barcodeTubosEacos);
+		assertEquals("34197848000006250601124697161232938109267000", barcodeInox2);
+		
+		assertEquals("34193848500007854901123906802992938061757000", barcodeAcotubo);
 		
 	}
 
@@ -192,9 +205,12 @@ public class ItauCodigoDeBarrasTest extends BarcodeGenerics {
 
 	
 
-	private String getDigitoNossoNumero(String agenciaContaCarteiraNossoNumero) {
+	private String getDigitoNossoNumero(String linhaDigitavel) {
 
-		int decrementador = 20;
+		
+		return linhaDigitavel.substring(31,32);
+		
+		/*int decrementador = 20;
 		int multiplicador = 2;
 		Integer acumulador = 0;
 
@@ -230,7 +246,7 @@ public class ItauCodigoDeBarrasTest extends BarcodeGenerics {
 			return "0";
 		}
 
-		return result.toString();
+		return result.toString();*/
 
 	}
 

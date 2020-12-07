@@ -26,6 +26,21 @@ public class BancoDoBrasilCodigoDeBarrasTest extends BarcodeGenerics {
 	private static final String TIPO_MODALIDADE_DE_COBRANCA_ESPERADO = "17";
 
 	@Test
+	public void montaCodigoDeBarrasUtilizandoAclassBrasil() {
+		BancoDoBrasilCalculoBarcode inox = new BancoDoBrasilCalculoBarcode(LocalDate.of(2020, 11, 19),
+				"00191.60373 53812.732211 00105.178172 2 84440000442181", "16037538127", "3221-2", "105178-4");
+		
+		BancoDoBrasilCalculoBarcode acotubo = new BancoDoBrasilCalculoBarcode(LocalDate.of(2019, 04, 03),
+				"00190.00009 00000.006098 59560.231173 8 78480000190033", "060959560231", "3221-2", "794-3");
+		
+		String barcodeInox = inox.getBarcode();
+		String barcodeAcotubo = acotubo.getBarcode();
+		
+		assertEquals("00192844400004421811603753812732210010517817", barcodeInox);
+		//assertEquals("00198784800001900330000000000006095956023117", barcodeAcotubo);
+	}
+
+	@Test
 	public void testeDigitoExemploBancoDoBrasil() {
 		String digitoVerificadorCodigoDeBarras = getDigitoVerificadorCodigoDeBarras(EXEMPLO_BARCODE);
 
@@ -76,7 +91,7 @@ public class BancoDoBrasilCodigoDeBarrasTest extends BarcodeGenerics {
 		assertEquals(BARCODE_ESPERADO, barcodeCom44posicoes);
 		assertEquals(TAMANHO_BARCODE_BOLETO, barcodeCom44posicoes.length());
 	}
-	
+
 	private String getContaBeneficiarioSemDigito(String contaBeneficiario) {
 		String contaBeneficiarioSomenteNumeros = new Convert().convertNumberFromString(contaBeneficiario);
 

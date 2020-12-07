@@ -67,7 +67,7 @@ public class ItauCalculoBarcode extends BarcodeGenerics {
 		String nossoNumeroAgenciaEConta = agencia + contaSomenteNumeros.subSequence(0, contaSomenteNumeros.length() - 1) + carteiraNossoNumeroDigito.toString();
 		
 		if (nossoNumeroAgenciaEConta.length() == 20) {
-			carteiraNossoNumeroDigito.append(getDigitoNossoNumero(nossoNumeroAgenciaEConta));
+			carteiraNossoNumeroDigito.append(getDigitoNossoNumero(linhaDigitalSomenteNumeros));
 		}
 
 		return carteiraNossoNumeroDigito.toString();
@@ -116,9 +116,11 @@ public class ItauCalculoBarcode extends BarcodeGenerics {
 		return result.toString();
 	}
 	
-	private String getDigitoNossoNumero(String agenciaContaCarteiraNossoNumero) {
+	private String getDigitoNossoNumero(String linhaDigitavel) {
 
-		int decrementador = 20;
+		return linhaDigitavel.substring(31,32);
+		
+		/*int decrementador = 20;
 		int multiplicador = 2;
 		Integer acumulador = 0;
 
@@ -154,7 +156,7 @@ public class ItauCalculoBarcode extends BarcodeGenerics {
 			return "0";
 		}
 
-		return result.toString();
+		return result.toString();*/
 
 	}
 
